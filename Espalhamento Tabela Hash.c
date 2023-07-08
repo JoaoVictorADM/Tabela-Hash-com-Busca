@@ -2,18 +2,18 @@
 #include <stdlib.h>
 #include <time.h>
 
-// Definição das estruturas de dados
+// DefiniÃ§Ã£o das estruturas de dados
 typedef struct lista {
     int chave;  // Valor do elemento armazenado
-    struct lista *prox; // Ponteiro para o prï¿½ximo elemento da lista
+    struct lista *prox; // Ponteiro para o prÃ³ximo elemento da lista
 } Tlista;
 
 typedef struct cabeca {
     Tlista *prim;  // Ponteiro para o primeiro elemento da lista
-    Tlista *ult;  // Ponteiro para o último elemento da lista
+    Tlista *ult;  // Ponteiro para o Ãºltimo elemento da lista
 } Tcabeca;
 
-// Declaração das funcões
+// DeclaraÃ§Ã£o das funcÃµes
 unsigned long int calcula_tam_tabela(unsigned int num_elementos);
 unsigned short int eh_primo(unsigned int num);
 int gerarNumeroAleatorio();
@@ -25,15 +25,15 @@ int main(void) {
     printf("Insira o numero de elementos: ");
     scanf("%d", &num_elementos);
 
-    // Cálculo do tamanho adequado da tabela hash
+    // CÃ¡lculo do tamanho adequado da tabela hash
     unsigned long int tam_tabela = calcula_tam_tabela(num_elementos), i;
 
     printf("Tamanho da Tabela: %ld Fator de carga: %.4f\n", tam_tabela, num_elementos / (float)tam_tabela);
 
-    // Alocação dinâmica da tabela hash
+    // AlocaÃ§Ã£o dinÃ¢mica da tabela hash
     Tcabeca *tabela_hash = (Tcabeca *)malloc(sizeof(Tcabeca) * tam_tabela);
 
-    // Inicializaï¿½ï¿½o da tabela hash
+    // InicializaÃ§Ã£o da tabela hash
     for (i = 0; i < tam_tabela; i++) {
         (tabela_hash + i)->prim = NULL;
         (tabela_hash + i)->ult = NULL;
@@ -41,11 +41,11 @@ int main(void) {
 
     int chave = 0;
 
-    // Geração dos números aleatórios e inserção na tabela hash
+    // GeraÃ§Ã£o dos nÃºmeros aleatÃ³rios e inserÃ§Ã£o na tabela hash
     for (i = 0; i < num_elementos; i++) {
         chave = gerarNumeroAleatorio();
 
-        // Cáculo do índice da tabela hash
+        // CÃ¡culo do Ã­ndice da tabela hash
         unsigned int indice = chave % tam_tabela;
 
         if (!((tabela_hash + indice)->prim)) {
@@ -55,7 +55,7 @@ int main(void) {
             (tabela_hash + indice)->prim->chave = chave;
             (tabela_hash + indice)->prim->prox = NULL;
         } else {
-            // Se a lista já contiver elementos, insere no final para um processo de inserção mais rápida em caso de colisões
+            // Se a lista jÃ¡ contiver elementos, insere no final para um processo de inserÃ§Ã£o mais rÃ¡pida em caso de colisÃµes
             (tabela_hash + indice)->ult->prox = (Tlista *)malloc(sizeof(Tlista));
             (tabela_hash + indice)->ult = (tabela_hash + indice)->ult->prox;
             (tabela_hash + indice)->ult->chave = chave;
@@ -73,7 +73,7 @@ int main(void) {
     busca(tabela_hash, elemento_busca, tam_tabela);
 }
 
-// Função para calcular o tamanho adequado da tabela hash
+// FunÃ§Ã£o para calcular o tamanho adequado da tabela hash
 unsigned long int calcula_tam_tabela(unsigned int num_elementos) {
     int i = 2 * num_elementos, j = i;
 
@@ -95,7 +95,7 @@ unsigned long int calcula_tam_tabela(unsigned int num_elementos) {
     }
 }
 
-// Função para verificar se um número é primo
+// FunÃ§Ã£o para verificar se um nÃºmero Ã© primo
 unsigned short int eh_primo(unsigned int num) {
     unsigned int i;
 
@@ -108,13 +108,13 @@ unsigned short int eh_primo(unsigned int num) {
     return 1;
 }
 
-// Função para gerar um nï¿½mero aleatório
+// FunÃ§Ã£o para gerar um nÃºmero aleatÃ³rio
 int gerarNumeroAleatorio() {
     srand(time(NULL));
     return rand();
 }
 
-// Função para realizar a busca de um elemento na tabela hash
+// FunÃ§Ã£o para realizar a busca de um elemento na tabela hash
 void busca(Tcabeca *tabela_hash, int busca, unsigned tam_tabela) {
     Tlista *aux = (tabela_hash + (busca % tam_tabela))->prim;
 
